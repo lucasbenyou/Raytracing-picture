@@ -1,5 +1,5 @@
 # ISE5783_6686_6223
-Project in windows systems by Joseph Haiim Amedi and Haim Hai Benyounes
+Project in windows systems by Joseph Haim Amedi and Haim Hai Benyounes
 
 This project is about the creation of an image using the oriented object programming in Java.
 it is the goal of the course "Mini Project of Introduction to Software Engineering"
