@@ -31,7 +31,7 @@ Run `JungleGorillasTests.twoGorillasInTheJungle()`; the image is written to
 
 The full technical write-up — every stage of the project, from the primitives to the
 anti-aliased final image, with the algorithms, the test strategy and the performance
-measurements — is in **[RAYTRACING_PROJECT.md](RAYTRACING_PROJECT.md)**.
+measurements — is in **[WRITE_UP.md](WRITE_UP.md)**.
 
 ## Layout
 
