@@ -3,7 +3,7 @@
 A ray tracer written from scratch in Java — no graphics library: every point, vector,
 intersection formula and lighting equation is implemented and unit-tested by hand.
 
-Mini Project — Introduction to Software Engineering (ISE5783_6686_6223).
+Mini Project — Introduction to Software Engineering .
 
 ![Two gorillas in a jungle](images/gorillasJungle.png)
 
