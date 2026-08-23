@@ -11,8 +11,6 @@ import primitives.Vector;
 /**
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
  * system
- *
- * @author Dan
  */
 public class Polygon extends Geometry {
     /**
@@ -87,10 +85,42 @@ public class Polygon extends Geometry {
         }
     }
 
-    @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxdistance) {
+     @Override
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxdistance) {
+        // 1) Le polygone est plan : on commence par couper son plan porteur.
+        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray, maxdistance);
+        if (planeIntersections == null)
+            return null;
 
-        return null;
+        Point p0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        try {
+            // 2) Test "meme cote" generalise a N sommets :
+            //    pour chaque arete (Vi, Vi+1) on calcule le signe de v . (Vi-P0) x (Vi+1-P0).
+            //    Le rayon traverse le polygone seulement si TOUS les signes sont identiques.
+            Vector v1 = vertices.get(size - 1).subtract(p0);
+            Vector v2 = vertices.get(0).subtract(p0);
+
+            double sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+            if (isZero(sign))
+                return null;                 // le rayon passe exactement par une arete
+            boolean positive = sign > 0;
+
+            for (int i = 0; i < size - 1; i++) {
+                v1 = v2;
+                v2 = vertices.get(i + 1).subtract(p0);
+                double s = alignZero(v.dotProduct(v1.crossProduct(v2)));
+                if (isZero(s) || (s > 0) != positive)
+                    return null;             // hors du polygone
+            }
+        } catch (IllegalArgumentException e) {
+            // P0 confondu avec un sommet, ou vecteurs colineaires -> pas d'intersection exploitable
+            return null;
+        }
+
+        // 3) Le point du plan est bien a l'interieur : on le rattache a CE polygone.
+        return List.of(new GeoPoint(this, planeIntersections.get(0).point));
     }
 
     @Override
